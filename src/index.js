@@ -11,21 +11,17 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-const refs = {
-  form: document.querySelector('.search-form'),
-  input: document.querySelector('input'),
-  gallery: document.querySelector('.gallery'),
-};
+const getEl = selector => document.querySelector(selector);
 
 let page = 1;
 
-refs.form.addEventListener(`submit`, onSubmit);
-refs.gallery.addEventListener(`click`, evt => evt.preventDefault());
+getEl('.search-form').addEventListener(`submit`, onSubmit);
+getEl('.gallery').addEventListener(`click`, evt => evt.preventDefault());
 
 function onSubmit(evt) {
   evt.preventDefault();
-  const value = refs.form.elements.searchQuery.value;
-  refs.gallery.innerHTML = '';
+  const value = getEl('.search-form').elements.searchQuery.value;
+  getEl('.gallery').innerHTML = '';
   API.getData(value, page).then(res => {
     page = 1;
     if (res.data.hits.length === 0) {
@@ -34,8 +30,26 @@ function onSubmit(evt) {
       );
     } else {
       Notiflix.Notify.success(`Hooray! We found ${res.data.totalHits} images.`);
-      createMarkup(res.data.hits, refs.gallery);
+      createMarkup(res.data.hits, getEl('.gallery'));
       lightbox.refresh();
     }
   });
 }
+
+const onEntry = entries => {
+  entries.forEach(async entry => {
+    if (entry.isIntersecting && getEl('.img-link')) {
+      page += 1;
+      const value = getEl('.search-form').elements.searchQuery.value;
+      const responseData = await API.getData(value, page);
+      let responseHits = responseData.data.hits;
+      createMarkup(responseHits, getEl('.gallery'));
+      lightbox.refresh();
+    }
+  });
+};
+
+const observer = new IntersectionObserver(onEntry, {
+  rootMargin: '100px',
+});
+observer.observe(getEl('footer'));
