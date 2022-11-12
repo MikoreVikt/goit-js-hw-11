@@ -1,12 +1,9 @@
 /* RESET START */
-p {
-    margin: 0;
-}
-
 img {
     display: block;
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 230px;
+    object-fit: cover
 }
 
 a {
@@ -20,11 +17,6 @@ button {
 
 
 /* COMMON START */
-.section {
-    // max-width: 1200px;
-    margin: 0 auto;
-}
-
 .container {
     padding: 5px 15px;
 }
@@ -41,6 +33,8 @@ header {
     padding: 10px 0;
     background-color: #4e4ecf;
     z-index: 999;
+    box-shadow: 0px 0px 30px 1px rgba(0, 0, 0, 0.75) inset,
+    0px 11px 9px -5px rgba(0, 0, 0, 0.75);
 }
 
 .search__wrapper {
@@ -81,6 +75,7 @@ header {
 .gallery {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
     margin-top: 100px;
     margin-bottom: 20px;
@@ -88,10 +83,14 @@ header {
 }
 
 .gallery a {
-    width: calc(25% - 30px);
+    width: 300px;
+    height: 300px;
     z-index: 9;
-    transition: transform .5s cubic-bezier(.075,.82,.165,1);
+    transition: transform .9s cubic-bezier(.075,.82,.165,1);
     box-shadow: 2px 2px 4px #000;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: zoom-in;
 }
 
 .gallery a:hover {
@@ -101,27 +100,38 @@ header {
 .info {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 10px;
-    gap: 10px;
+    justify-content: space-evenly;
     text-align: center;
-    font-size: 10px;
-}
-
-.load-more {
-    display: block;
-    font-size: 16px;
-    margin: 0 auto;
-    padding: 20px;
-    color: white;
+    height: 30px;
+    font-size: 15px;
+    padding: 23px 10px;
+    margin: 0;
+    gap: 10px;
     background-color: #4e4ecf;
-    border: none;
-    border-radius: 10px;
 }
 
-.load-more:hover,
-.load-more:focus {
-    font-weight: bold;
+.info__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
 }
+
+
+// .load-more {
+//     display: block;
+//     font-size: 16px;
+//     margin: 0 auto;
+//     padding: 20px;
+//     color: white;
+//     background-color: #4e4ecf;
+//     border: none;
+//     border-radius: 10px;
+// }
+
+// .load-more:hover,
+// .load-more:focus {
+//     font-weight: bold;
+// }
 /* MAIN END */
 
