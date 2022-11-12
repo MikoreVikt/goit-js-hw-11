@@ -26,19 +26,16 @@ function onSubmit(evt) {
   evt.preventDefault();
   const value = refs.form.elements.searchQuery.value;
   refs.gallery.innerHTML = '';
-  API.getData(value, page).then(data => {
+  API.getData(value, page).then(res => {
     page = 1;
-    if (data.data.hits.length === 0) {
+    if (res.data.hits.length === 0) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else {
-      Notiflix.Notify.success(
-        `Hooray! We found ${data.data.totalHits} images.`
-      );
-      createMarkup(data.data.hits, refs.gallery);
+      Notiflix.Notify.success(`Hooray! We found ${res.data.totalHits} images.`);
+      createMarkup(res.data.hits, refs.gallery);
       lightbox.refresh();
-      observer.observe(refs.gallery.lastElementChild);
     }
   });
 }
