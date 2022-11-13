@@ -22,8 +22,8 @@ function onSubmit(evt) {
   evt.preventDefault();
   const value = getEl('.search-form').elements.searchQuery.value;
   getEl('.gallery').innerHTML = '';
+  page = 1;
   API.getData(value, page).then(res => {
-    page = 1;
     if (res.data.hits.length === 0) {
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
