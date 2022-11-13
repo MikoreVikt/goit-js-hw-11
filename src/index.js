@@ -41,16 +41,18 @@ const onEntry = entries => {
     if (entry.isIntersecting && getEl('.img-link')) {
       page += 1;
       const value = getEl('.search-form').elements.searchQuery.value;
-      const responseData = await API.getData(value, page);
-      let responseHits = responseData.data.hits;
-      if (responseHits.length === 0) {
-        return Notiflix.Notify.info(
-          "We're sorry, but you've reached the end of search results."
-        );
-      } else {
-        createMarkup(responseHits, getEl('.gallery'));
-        lightbox.refresh();
-      }
+      await API.getData(value, page).then(res => {
+        if (res.data.hits.length === 0) {
+          page -= 1;
+          Notiflix.Notify.warning(
+            "We're sorry, but you've reached the end of search results."
+          );
+          return;
+        } else {
+          createMarkup(res.data.hits, getEl('.gallery'));
+          lightbox.refresh();
+        }
+      });
     }
   });
 };
