@@ -43,8 +43,14 @@ const onEntry = entries => {
       const value = getEl('.search-form').elements.searchQuery.value;
       const responseData = await API.getData(value, page);
       let responseHits = responseData.data.hits;
-      createMarkup(responseHits, getEl('.gallery'));
-      lightbox.refresh();
+      if (responseHits.length === 0) {
+        return Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      } else {
+        createMarkup(responseHits, getEl('.gallery'));
+        lightbox.refresh();
+      }
     }
   });
 };
